@@ -20,6 +20,7 @@ pipeline {
         stage('Unit Test Execution') {
             steps{
                 sh 'mvn test'
+                sh 'exit 1'
             }
         }
         
@@ -37,5 +38,19 @@ pipeline {
                 sh 'docker push olivierdocker1/devops-tp-02'
             }
         }
+    }
+
+    failure {
+        emailext(
+            subject: "Build Failed: ${env.JOB_NAME}",
+            body: """
+                Build failed.
+
+                Check console output:
+                ${env.BUILD_URL}console
+            """,
+            attachLog: true,
+            to: 'olivierdevtest@gmail.com'
+        )
     }
 }
