@@ -40,17 +40,20 @@ pipeline {
         }
     }
 
-    failure {
-        emailext(
-            subject: "Build Failed: ${env.JOB_NAME}",
-            body: """
-                Build failed.
+    post {
+        failure {
+                emailext(
+                    subject: "Build Failed: ${env.JOB_NAME}",
+                    body: """
+                        Build failed.
 
-                Check console output:
-                ${env.BUILD_URL}console
-            """,
-            attachLog: true,
-            to: 'olivierdevtest@gmail.com'
-        )
+                        Check console output:
+                        ${env.BUILD_URL}console
+                    """,
+                    attachLog: true,
+                    to: 'olivierdevtest@gmail.com'
+                )
+        }
     }
+  
 }
