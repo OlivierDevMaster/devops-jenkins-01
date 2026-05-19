@@ -20,7 +20,7 @@ pipeline {
         stage('Unit Test Execution') {
             steps{
                 sh 'mvn test'
-                sh 'exit 1'
+                // sh 'exit 1'
             }
         }
         
